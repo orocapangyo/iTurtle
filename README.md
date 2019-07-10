@@ -3,7 +3,8 @@
 
 * [Slack / Chat](http://bit.ly/오로카판교슬랙)
 
-![iTurtle](./01_modeling/img_5821.jpg)
+![iTurtle](./01_modeling/IMG_5821.jpg)
+
 
 
 ## 아래와 같이 활용이 가능합니다.
