@@ -17,10 +17,10 @@
             "help": {
               "online": "https://github.com/orocapangyo/iTurtle/OpenCrArduino"
             },
-            "url": "https://janedeveloper.github.io/myboard/myboard-1.0.0.zip",
-            "archiveFileName": "myboard-1.0.0.zip",
-            "checksum": "SHA-256:ec3ff8a1dc96d3ba6f432b9b837a35fd4174a34b3d2927de1d51010e8b94f9f1",
-            "size": "15005",
+            "url": "https://raw.githubusercontent.com/RobotCing/Cing/master/Software/Packages/RobotCing-4.0.0.zip",
+            "archiveFileName": "RobotCing-4.0.0.zip",
+            "checksum": "SHA-256:38675bea350e7c99c9af19653c80837f1fc290bb3e4013456076221f293638ec",
+            "size": "61272",
             "boards": [
               {"name": "iTurtle"},
               {"name": "iTurtle Pro"}
