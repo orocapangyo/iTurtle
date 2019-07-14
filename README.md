@@ -13,6 +13,16 @@
 - ROS 이해를 위한 로봇 
 
 
+## OpenCrArduino
+- OpenCr보드와 동일하지만, 아두이노 보드 베이스의 커스텀 제작 보드 콘트롤 예제
+- 기본적으로는 아래의 소스를 기본으로 한다.
+https://www.arduinolibraries.info/libraries/rosserial-arduino-library
+https://github.com/frankjoshua/rosserial_arduino_lib
+- 만약 커스텀 보드를 사용하지 않고, 일반 아두이노 보드를 사용하려면, 아래의 라이브러리를 먼저 인스톨 해야 한다.
+![Ros Serial Lib](./img/libmanagerRosSerial.png)
+
+
+
 
 # First-Time Git Setup in MS Code
 $ git config --global user.name "John Doe"
