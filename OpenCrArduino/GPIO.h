@@ -19,7 +19,7 @@
 #ifndef HARDWARE_AVR_GPIO_H
 #define HARDWARE_AVR_GPIO_H
 
-#include "/Arduino-GPIO/src/Hardware/AVR/Board.h"
+#include "/iTurtle/OpenCrArduino/Board.h"
 
 /**
  * General Purpose Digital I/O pin template class. Highly optimized
