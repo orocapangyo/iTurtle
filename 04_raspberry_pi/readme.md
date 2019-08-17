@@ -18,3 +18,6 @@ https://github.com/tkurbad/sh1106
 
 
 
+19.168.21.34
+
+

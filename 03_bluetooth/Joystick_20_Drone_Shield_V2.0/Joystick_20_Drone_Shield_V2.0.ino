@@ -262,7 +262,8 @@ void loop()
     break;
     case OPERATION_STEP_3:
       bleSerial.print("atd");
-      bleSerial.print("083a5c1f015b");
+      //bleSerial.print("083a5c1f015b");
+      bleSerial.print("b827ebb15add");
       bleSerial.print("\r");
       checkNextStep();
     break;

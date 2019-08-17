@@ -1,0 +1,123 @@
+#!/bin/bash
+# /etc/init.d/mjpg_streamer.sh 
+# v0.2 phillips321.co.uk 
+### BEGIN INIT INFO 
+# Provides: mjpg_streamer.sh 
+# Required-Start: $network 
+# Required-Stop: $network 
+# Default-Start: 2 3 4 5 
+# Default-Stop: 0 1 6 
+# Short-Description: mjpg_streamer for webcam 
+# Description: Streams /dev/video0 to http://IP/?action=stream 
+### END INIT INFO 
+
+# 
+export width=640 
+export height=480 
+export bitrate=10 
+export SHUTDOWN_WAIT=2 
+if [ -n "$2" ]; then 
+    width=$2 
+fi 
+
+if [ -n "$3" ]; then 
+    height=$3 
+fi 
+
+if [ -n "$4" ]; then 
+    bitrate=$4 
+fi 
+
+export LD_MJPG_STREAMER=/usr/local/lib/mjpg-streamer 
+
+f_message(){ 
+    echo "[+] $1" 
+} 
+
+mjpg_streamer_pid() { 
+    echo `ps aux | grep mjpg-streamer | grep -v grep | awk '{ print $2 }'` 
+} 
+
+start() { 
+    pid=$(mjpg_streamer_pid) 
+    if [ -n "$pid" ] 
+    then 
+        echo "mjpg_streamer is already running (pid: $pid)" 
+    else 
+        # Start mjpg_streamer 
+            f_message "Starting mjpg_streamer" 
+            mjpg_streamer -b -i "$LD_MJPG_STREAMER/input_uvc.so -r "$width"x"$height" -f $bitrate -y" -o 
+    "$LD_MJPG_STREAMER/output_http.so -p 8080 -w /usr/local/share/mjpg-streamer/www" 
+            sleep 2 
+            f_message "mjpg_streamer started" 
+    fi 
+    return 0 
+} 
+
+stop() { 
+    pid=$(mjpg_streamer_pid) 
+    if [ -n "$pid" ] 
+    then 
+        f_message "Stopping mjpg_streamer..." 
+        kill -9 $pid 
+        
+        let kwait=$SHUTDOWN_WAIT 
+        let count=0; 
+        until [ `ps -p $pid | grep -c $pid` = '0' ] || [ $count -gt $kwait ] 
+        do 
+            echo -n -e "\nwaiting for processes to exit"; 
+            sleep 1 
+            let count=$count+1; 
+        done 
+        
+        if [ $count -gt $kwait ]; then 
+            echo -n -e "\nkilling processes which didn't stop after $SHUTDOWN_WAIT seconds\n" 
+            kill -9 $pid 
+        fi 
+    else 
+        echo "mjpg_streamer is not running" 
+    fi 
+    
+    return 0 
+} 
+
+# Carry out specific functions when asked to by the system 
+case "$1" in 
+    start) 
+        start 
+        ;; 
+    stop) 
+        stop 
+        ;; 
+    restart) 
+        stop 
+        sleep 2 
+        start 
+        ;; 
+    resolution) 
+        resolution=`ps axu | grep mjpg-streamer | grep -v grep | awk '{ print $16 }'` 
+        if [ -n "$resolution" ]; 
+        then 
+            echo "${resolution}" 
+        else 
+            echo "0x0" 
+        fi 
+        ;; 
+    status) 
+        pid=`ps -A | grep mjpg_streamer | grep -v "grep" | grep -v mjpg_streamer. | awk '{print $1}' | 
+head -n 1` 
+        if [ -n "$pid" ]; 
+        then 
+            f_message "mjpg_streamer is running with pid ${pid}" 
+            f_message "mjpg_streamer was started with the following command line" 
+            cat /proc/${pid}/cmdline ; echo "" 
+        else 
+            f_message "Could not find mjpg_streamer running" 
+        fi 
+        ;; 
+    *) 
+        f_message "Usage: $0 {start|stop|status|restart}" 
+        exit 1 
+        ;; 
+esac 
+exit 0
